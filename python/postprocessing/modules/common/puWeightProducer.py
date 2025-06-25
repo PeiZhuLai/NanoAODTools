@@ -175,11 +175,11 @@ puAutoWeight_UL2016 = lambda: puWeightProducer(
 
 pufile_dataUL2016PreVFP = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-2016preVFP-99bins_withVar.root" % os.environ['CMSSW_BASE']
 puAutoweight_UL2016PreVFP = lambda: puWeightProducer(
-    "auto", pufile_data2016PreVFP, "pu_mc", "pileup", verbose=False)
+    "auto", pufile_dataUL2016PreVFP, "pu_mc", "pileup", verbose=False)
 
 pufile_dataUL2016PostVFP = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-2016postVFP-99bins_withVar.root" % os.environ['CMSSW_BASE']
 puAutoweight_UL2016PostVFP = lambda: puWeightProducer(
-    "auto", pufile_data2016PostVFP, "pu_mc", "pileup", verbose=False)
+    "auto", pufile_dataUL2016PostVFP, "pu_mc", "pileup", verbose=False)
 
 # 2017
 pufile_dataUL2017 = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-2017-99bins_withVar.root" % os.environ['CMSSW_BASE']
