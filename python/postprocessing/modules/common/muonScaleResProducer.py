@@ -71,8 +71,9 @@ class muonScaleResProducer(Module):
                 if self.is_mc:
                     # MC: smearing
                     u1 = random.uniform(0.0, 1.0)
-                    corr = mk_safe(roccor.kSmearMC, mu.charge, mu.pt, mu.eta, mu.phi, mu.nTrackerLayers, u1)
-                    corr_err = mk_safe(roccor.kSmearMCerror, mu.charge, mu.pt, mu.eta, mu.phi, mu.nTrackerLayers, u1)
+                    # pt -> bsConstrainedPt for Run3 # Pei-Zhu
+                    corr = mk_safe(roccor.kSmearMC, mu.charge, mu.bsConstrainedPt, mu.eta, mu.phi, mu.nTrackerLayers, u1)
+                    corr_err = mk_safe(roccor.kSmearMCerror, mu.charge, mu.bsConstrainedPt, mu.eta, mu.phi, mu.nTrackerLayers, u1)
                 else:
                     # Data: scaling
                     corr = mk_safe(roccor.kScaleDT, mu.charge, mu.pt, mu.eta, mu.phi)
