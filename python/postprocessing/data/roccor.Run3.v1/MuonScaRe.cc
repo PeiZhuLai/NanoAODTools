@@ -115,7 +115,7 @@ double get_k(double eta, string var) {
 }
 
 
-double pt_resol(double pt, double eta, float nL) {
+double pt_resol(double pt, double eta, float nL, double low_pt_threshold = 26) {
 
     // load correction values
     double rndm = (double) get_rndm(eta, nL);
@@ -124,8 +124,11 @@ double pt_resol(double pt, double eta, float nL) {
 
     // calculate corrected value and return original value if a parameter is nan
     double ptc = pt * ( 1 + k * std * rndm);
-    // cout << "pt: " << pt << ", corrected pt: " << ptc << endl;
     if (isnan(ptc)) ptc = pt;
+    if(ptc / pt > 2 || ptc / pt < 0.1 || ptc < 0 || pt < low_pt_threshold || pt > 200){
+	    ptc = pt;
+    }
+
     return ptc;
 }
 
@@ -150,11 +153,14 @@ double pt_resol_var(double pt_woresol, double pt_wresol, double eta, string updn
     else {
         cout << "ERROR: updn must be 'up' or 'dn'" << endl;
     }
+    if(pt_var / pt_woresol > 2 || pt_var / pt_woresol < 0.1 || pt_var < 0){
+            pt_var = pt_woresol; 
+    }
 
     return pt_var;
 }
 
-double pt_scale(bool is_data, double pt, double eta, double phi, int charge) {
+double pt_scale(bool is_data, double pt, double eta, double phi, int charge, double low_pt_threshold = 26) {
         
     // use right correction
     string dtmc = "mc";
@@ -162,7 +168,9 @@ double pt_scale(bool is_data, double pt, double eta, double phi, int charge) {
 
     double a = cset->at("a_"+dtmc)->evaluate({eta, phi, "nom"});
     double m = cset->at("m_"+dtmc)->evaluate({eta, phi, "nom"});
-    // cout << "a: " << a << ", m: " << m << ", pt: " << pt << ", scaled pt: " << 1. / (m/pt + charge * a) << endl;
+    if(pt < low_pt_threshold)
+	    return 1;
+
     return 1. / (m/pt + charge * a);
 }
 
