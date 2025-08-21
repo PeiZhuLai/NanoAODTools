@@ -169,7 +169,7 @@ double pt_scale(bool is_data, double pt, double eta, double phi, int charge, dou
     double a = cset->at("a_"+dtmc)->evaluate({eta, phi, "nom"});
     double m = cset->at("m_"+dtmc)->evaluate({eta, phi, "nom"});
     if(pt < low_pt_threshold)
-	    return 1;
+	    return pt;
 
     return 1. / (m/pt + charge * a);
 }
